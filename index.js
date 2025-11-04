@@ -62,4 +62,13 @@ app.put('/films/:id', (req, res) => {
     });
 });
 
-module.exports = db;
+app.delete('/films/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM film WHERE ID = ?';
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ message: 'Film deleted' });
+    });
+});
