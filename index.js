@@ -20,3 +20,23 @@ const db = mysql.createConnection({
     database: 'hollywood',
     port: 3306
 });
+
+db.connect((err) => {
+    if (err) {
+        console.error('Error', err);
+        return;
+    }
+    console.log('Connected');
+});
+
+app.get('/films', (req, res) => {
+    const sql = 'SELECT * FROM film';
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(results);
+    });
+});
+
+module.exports = db;
