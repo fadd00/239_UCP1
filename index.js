@@ -39,4 +39,17 @@ app.get('/films', (req, res) => {
     });
 });
 
+app.post('/films', (req, res) => {
+    const { nama_film, deskripsi, sutradara, tahun_terbit, genre } = req.body;
+    const sql = 'INSERT INTO film (nama_film, deskripsi, sutradara, tahun_terbit, genre) VALUES (?, ?, ?, ?, ?)';
+    db.query(sql, [nama_film, deskripsi, sutradara, tahun_terbit, genre], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.status(201).json({ message: 'Film added', filmId: result.insertId });
+    });
+});
+
+
+
 module.exports = db;
