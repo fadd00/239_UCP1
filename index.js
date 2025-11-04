@@ -50,6 +50,16 @@ app.post('/films', (req, res) => {
     });
 });
 
-
+app.put('/films/:id', (req, res) => {
+    const { id } = req.params;
+    const { nama_film, deskripsi, sutradara, tahun_terbit, genre } = req.body;
+    const sql = 'UPDATE film SET nama_film = ?, deskripsi = ?, sutradara = ?, tahun_terbit = ?, genre = ? WHERE ID = ?';
+    db.query(sql, [nama_film, deskripsi, sutradara, tahun_terbit, genre, id], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ message: 'Film updated' });
+    });
+});
 
 module.exports = db;
